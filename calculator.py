@@ -1,7 +1,7 @@
 from tkinter import *
 
 root = Tk()
-root.title("Simeple Calculator")
+root.title("Simple Calculator")
 
 #region Ex Code
 # inputBox = Entry(root, bg="black", fg="white")
@@ -17,9 +17,9 @@ root.title("Simeple Calculator")
 # myButton.grid(row=0, column=0)
 #endregion
 
-num1=0.0
-num2=0.0
-ans=0.0
+# num1=0.0
+# num2=0.0
+# ans=0.0
 
 answer = Entry(root, text="nothing", width = 55, bg="white")
 answer.grid(row=0, column=0, columnspan=5)
@@ -32,12 +32,63 @@ def buttonClick(number):
 # Make function to convert input to int and add it into each add, subtract, mul and div
 def numberStringToInt():
     num1Str = answer.get()
-    num1 = int(num1Str)
-    print(num1)
+    global num1
+    num1 = float(num1Str)
+    print(f"First number {num1}")
+    answer.delete(0, END)
 
 def buttonClickAdd():
     numberStringToInt()
+    # print(f" Second Number {num1}")
+    # answer.delete(0, END)
+    global equation
+    equation = "add"
+
+def buttonClickSub():
+    numberStringToInt()
+    global equation
+    equation = "sub"
+
+def buttonClickMul():
+    numberStringToInt()
+    global equation
+    equation = "mul"
+
+def buttonClickDiv():
+    numberStringToInt()
+    global equation
+    equation = "div"
+
+def buttonClickClear():
+    global num1
+    global num2
+    global ans
+    num1=0.0
+    num2=0.0
+    ans=0.0
     answer.delete(0, END)
+
+def buttonClickDot():
+    answer.insert("end", ".")
+
+def buttonClickEqu():
+    num2Str = answer.get()
+    global num2
+    global ans
+    num2 = float(num2Str)
+    answer.delete(0, END)
+    if equation =="add":
+        ans = num1 + num2
+        answer.insert("end", ans)
+    elif equation == "sub":
+        ans = num1 - num2
+        answer.insert("end", ans)
+    elif equation == "div":
+        ans = num1 / num2
+        answer.insert("end", ans)
+    elif equation == "mul":
+        ans = num1 * num2
+        answer.insert("end", ans)
 
 #region Creating the Buttons
 button1 = Button(root, text="1", width = 12, bg="#D3D3D3", command= lambda : buttonClick(1))
@@ -50,13 +101,13 @@ button7 = Button(root, text="7", width = 12, bg="#D3D3D3", command= lambda : but
 button8 = Button(root, text="8", width = 12, bg="#D3D3D3", command= lambda : buttonClick(8))
 button9 = Button(root, text="9", width = 12, bg="#D3D3D3", command= lambda : buttonClick(9))
 button0 = Button(root, text="0", width=12, bg="#D3D3D3", command= lambda : buttonClick(0))
-buttonDot = Button(root, text=".", width=12, bg="#D3D3D3", command= lambda : buttonClick(0))
-buttonClear = Button(root, text="Clear", width=55, bg="#D3D3D3", command= lambda : buttonClick(0))
-buttonMul = Button(root, text="x", width=12, bg="#D3D3D3", command= lambda : buttonClick(0))
-buttonDiv = Button(root, text="%", width=12, bg="#D3D3D3", command= lambda : buttonClick(0))
+buttonDot = Button(root, text=".", width=12, bg="#D3D3D3", command=buttonClickDot)
+buttonClear = Button(root, text="Clear", width=55, bg="#D3D3D3", command=buttonClickClear)
+buttonMul = Button(root, text="x", width=12, bg="#D3D3D3", command=buttonClickMul)
+buttonDiv = Button(root, text="%", width=12, bg="#D3D3D3", command=buttonClickDiv)
 buttonAdd = Button(root, text="+", width=12, bg="#D3D3D3", command=buttonClickAdd)
-buttonSub = Button(root, text="-", width=12, bg="#D3D3D3", command= lambda : buttonClick(0))
-buttonEqu = Button(root, text="=", width=12, bg="#D3D3D3", command= lambda : buttonClick(0))
+buttonSub = Button(root, text="-", width=12, bg="#D3D3D3", command=buttonClickSub)
+buttonEqu = Button(root, text="=", width=12, bg="#D3D3D3", command=buttonClickEqu)
 
 #endregion
 
