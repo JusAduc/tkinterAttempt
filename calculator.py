@@ -2,45 +2,55 @@ from tkinter import *
 
 root = Tk()
 root.title("Simple Calculator")
-
-#region Ex Code
-# inputBox = Entry(root, bg="black", fg="white")
-# inputBox.grid(row=0, column=1)
-# inputBox.insert(0, "Enter your name.")
-
-# def myButton_Click():
-#     myLabel = Label(root, text=inputBox.get())
-#     myLabel.grid(row=1, column=1)
-
-# myButton = Button(root, text="Click Me", command=myButton_Click)
-
-# myButton.grid(row=0, column=0)
-#endregion
-
-# num1=0.0
-# num2=0.0
-# ans=0.0
+global i
+i = 0
 
 answer = Entry(root, text="nothing", width = 55, bg="white")
 answer.grid(row=0, column=0, columnspan=5)
 
+#region Button Click Functions
 def buttonClick(number):
-    # answer.delete(0, END)
     answer.insert("end", number)
-    print(number)
 
-# Make function to convert input to int and add it into each add, subtract, mul and div
+def buttonClickEqu():
+    num2Str = answer.get()
+    global num2
+    global ans
+    global num1
+    num2 = float(num2Str)
+    print(num2)
+    answer.delete(0, END)
+    if equation =="add":
+        ans = num1 + num2
+        answer.insert("end", ans)
+    elif equation == "sub":
+        ans = num1 - num2
+        answer.insert("end", ans)
+    elif equation == "div":
+        ans = num1 / num2
+        answer.insert("end", ans)
+    elif equation == "mul":
+        ans = num1 * num2
+        answer.insert("end", ans)
+    num1 = ans
+
+    print(f"Number 1: {num1}")
+    print(f"Number 2: {num2}")
+    print(f"Answer: {ans}")
+
 def numberStringToInt():
     num1Str = answer.get()
     global num1
+    global i
+    i = i + 1
+    print(i)
+    if i>=2:
+        buttonClickEqu()
     num1 = float(num1Str)
-    print(f"First number {num1}")
     answer.delete(0, END)
 
 def buttonClickAdd():
     numberStringToInt()
-    # print(f" Second Number {num1}")
-    # answer.delete(0, END)
     global equation
     equation = "add"
 
@@ -71,24 +81,7 @@ def buttonClickClear():
 def buttonClickDot():
     answer.insert("end", ".")
 
-def buttonClickEqu():
-    num2Str = answer.get()
-    global num2
-    global ans
-    num2 = float(num2Str)
-    answer.delete(0, END)
-    if equation =="add":
-        ans = num1 + num2
-        answer.insert("end", ans)
-    elif equation == "sub":
-        ans = num1 - num2
-        answer.insert("end", ans)
-    elif equation == "div":
-        ans = num1 / num2
-        answer.insert("end", ans)
-    elif equation == "mul":
-        ans = num1 * num2
-        answer.insert("end", ans)
+#endregion
 
 #region Creating the Buttons
 button1 = Button(root, text="1", width = 12, bg="#D3D3D3", command= lambda : buttonClick(1))
